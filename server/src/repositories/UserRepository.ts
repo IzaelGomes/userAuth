@@ -1,12 +1,31 @@
-import {Iusers, user} from './IuserRepository'
+import { Iusers, user } from "./IuserRepository";
+import { prisma } from "../database/prisma";
+import { hash } from "bcryptjs";
 
+class UserRepository implements Iusers {
+  async save({ name, username, password }: user): Promise<user> {
+    const passwordHashed = await hash(password, 8);
 
-class UserRepository implements Iusers{
+    const createdUser = await prisma.user.create({
+      data: {
+        name,
+        username,
+        password: passwordHashed,
+      },
+    });
 
-    save(data: user): Promise<user> {
-        throw new Error('Method not implemented.')
-    }
+    return createdUser;
+  }
 
+  async findOne(username: string): Promise<user | undefined | null> {
+    const findUserExisted = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+    });
+
+    return findUserExisted;
+  }
 }
 
-export  {UserRepository}
+export { UserRepository };

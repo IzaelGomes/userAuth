@@ -1,6 +1,4 @@
 
-
-
 export type user ={
     name:string;
     username:string;
@@ -10,4 +8,5 @@ export type user ={
 
 export interface Iusers{
     save(data:user): Promise<user>
+    findOne(username:string): Promise<user | undefined | null>
 }

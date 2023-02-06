@@ -11,11 +11,41 @@ datasource db {
 }
 
 model User {
-  id  String @id @default(uuid())
-  name String 
-  username String 
-  password String 
+  id          String   @id @default(uuid())
+  name        String
+  username    String
+  password    String
   created_ate DateTime @updatedAt
 
   @@map("users")
+}
+
+model Permissions {
+  id               String             @id @default(uuid())
+  name             String
+  description      String
+  created_at       DateTime           @updatedAt
+  PermissionsRoles PermissionsRoles[]
+
+  @@map("permission")
+}
+
+model Role {
+  id          String             @id @default(uuid())
+  name        String
+  description String
+  created_at  DateTime           @updatedAt
+  permissions PermissionsRoles[]
+
+  @@map("role")
+}
+
+model PermissionsRoles {
+  roleId       Role        @relation(fields: [rolesId], references: [id])
+  rolesId String
+
+  permissionId Permissions @relation(fields: [permissionsId], references: [id])
+  permissionsId String
+
+  @@id([rolesId, permissionsId])
 }
