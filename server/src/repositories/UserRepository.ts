@@ -4,6 +4,7 @@ import { hash } from "bcryptjs";
 
 class UserRepository implements Iusers {
   async save({ name, username, password }: user): Promise<user> {
+    
     const passwordHashed = await hash(password, 8);
 
     const createdUser = await prisma.user.create({

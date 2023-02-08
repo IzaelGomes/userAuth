@@ -9,5 +9,5 @@ export type permissions ={
 export interface Ipermission{
     save(data: permissions): Promise<permissions>
     findOne(name:string): Promise<permissions | null >
-    findById(name:string): Promise<permissions | null >
+    //findById(name:string[]): Promise<permissions | null >
 }

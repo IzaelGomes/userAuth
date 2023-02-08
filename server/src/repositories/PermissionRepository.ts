@@ -32,16 +32,15 @@ class PermissionRepository implements Ipermission {
     return existedPermission;
   }
 
-  async findById(id: string): Promise<permissions | null> {
-    const existedPermission = await prisma.permissions.findUniqueOrThrow({
+  /*async findById(id: string[]): Promise<permissions | null> {
+    const existedPermission = await prisma.permissions.findFirst({
         where: {
           id,
         },
       });
   
       return existedPermission;
-    }
-
+    }*/
 }
 
 export { PermissionRepository };

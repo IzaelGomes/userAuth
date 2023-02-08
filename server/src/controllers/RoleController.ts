@@ -7,7 +7,7 @@ class RoleController {
     try {
       const data = request.body;
 
-      const roleRepository = new RoleRepossitory()
+      const roleRepository = new RoleRepossitory();
 
       const existRole = await roleRepository.findOne(data.name);
 
@@ -19,10 +19,7 @@ class RoleController {
 
       const role = await roleRepository.save(data);
 
-      console.log(data)
-
-
-      
+      console.log(data);
 
       return response.status(200).json(role);
     } catch (err) {
