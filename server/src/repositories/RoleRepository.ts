@@ -1,48 +1,34 @@
 import { Ipermission, permissions } from "./IpermissionRepository";
 import { prisma } from "../database/prisma";
 
-import { IRole, role } from "./IRolesRepository";
+import { IRole, role, findIdRole } from "./IRolesRepository";
 import { PermissionRepository } from "./PermissionRepository";
-
-import {} from 'cr'
+import { equal } from "assert";
 
 class RoleRepossitory implements IRole {
-
   async save({ name, description, permission }: role): Promise<role> {
-
-    const new_id = 
-
-    const permissionRepository = new PermissionRepository();
-
-   // const existedPermission = permissionRepository.findById()
-    
     const createRole = await prisma.role.create({
       data: {
         name,
         description,
-        permissions:{
-          connect:permission.map(item =>({
-            rolesId_permissionsId: {
-              rolesId:"",
-              permissionsId:item
-            }
-          }))
+        permissions: {
+          createMany: {
+            data: permission.map((item) => ({
+              permissionsId: item,
+            })),
+          },
+        },
       },
-    
-
-    
     });
 
-   
-
-    const savedRole = { 
+    const savedRole = {
       id: createRole.id,
       name: createRole.name,
       description: createRole.description,
       created_at: createRole.created_at,
+      permission,
     };
 
-    console.log("produto salvo" + savedRole);
 
     return savedRole;
   }
@@ -57,7 +43,17 @@ class RoleRepossitory implements IRole {
     return existedRole;
   }
 
+  async findAll(id: any): Promise<any | undefined> {
+    const roles = await prisma.role.findMany({
+      where: {
+        id: {
+          in: id,
+        },
+      },
+    });
 
+    return roles;
+  }
 }
 
 export { RoleRepossitory };

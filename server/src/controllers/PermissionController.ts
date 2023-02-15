@@ -6,8 +6,6 @@ class PermissionController {
     try {
       const data = request.body;
 
-      
-
       const permissionRepository = new PermissionRepository();
 
       const existpermission = await permissionRepository.findOne(data.name);
@@ -20,8 +18,7 @@ class PermissionController {
 
       const permission = await permissionRepository.save(data);
 
-     // console.log("produto da controller" + permission)
-
+      // console.log("produto da controller" + permission)
 
       console.log(permission);
 

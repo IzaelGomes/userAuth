@@ -9,11 +9,9 @@ class UserController {
 
       const { name, username, password } = request.body;
 
-      //console.log(request.body)
 
       const existUser = await userRepository.findOne(username);
 
-      //console.log(existUser)
 
       if (existUser?.username) {
         return response.status(400).json({ message: "User already exists" });
@@ -24,6 +22,23 @@ class UserController {
       return response.status(201).json(user);
     } catch (err) {
       return response.status(400).json({
+        err: err.message,
+      });
+    }
+  }
+
+  async findUser(request: Request, response: Response) {
+    try {
+      const data = request.body;
+      
+
+      const userRepository = new UserRepository();
+
+      const user = userRepository.findById(data.id);
+
+      return response.status(200).json(user);
+    } catch (err) {
+      response.status(400).json({
         err: err.message,
       });
     }

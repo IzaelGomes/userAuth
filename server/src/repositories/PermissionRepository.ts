@@ -2,8 +2,7 @@ import { Ipermission, permissions } from "./IpermissionRepository";
 import { prisma } from "../database/prisma";
 
 class PermissionRepository implements Ipermission {
-  
-  async save({  name, description }: permissions): Promise<permissions> {
+  async save({ name, description }: permissions): Promise<permissions> {
     const createPermission = await prisma.permissions.create({
       data: {
         name,
