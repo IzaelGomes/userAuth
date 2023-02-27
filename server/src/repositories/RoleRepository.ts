@@ -1,9 +1,7 @@
 import { Ipermission, permissions } from "./IpermissionRepository";
 import { prisma } from "../database/prisma";
 
-import { IRole, role, findIdRole } from "./IRolesRepository";
-import { PermissionRepository } from "./PermissionRepository";
-import { equal } from "assert";
+import { IRole, role } from "./IRolesRepository";
 
 class RoleRepossitory implements IRole {
   async save({ name, description, permission }: role): Promise<role> {
@@ -29,8 +27,13 @@ class RoleRepossitory implements IRole {
       permission,
     };
 
-
     return savedRole;
+  }
+
+  async findAllRoles(): Promise<role | undefined> {
+    const roles = await prisma.role.findMany();
+
+    return roles;
   }
 
   async findOne(name: string): Promise<role | null> {
@@ -43,7 +46,7 @@ class RoleRepossitory implements IRole {
     return existedRole;
   }
 
-  async findAll(id: any): Promise<any | undefined> {
+  async findAllById(id: any): Promise<any | undefined> {
     const roles = await prisma.role.findMany({
       where: {
         id: {

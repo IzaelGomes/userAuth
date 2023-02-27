@@ -1,11 +1,16 @@
-import { AuthProvider } from "./context/AuthContext"
-import Login from "./pages/login"
+import { useState } from 'react'
+import { AuthProvider } from './context/AuthContext'
+import Routers from './routes'
+import { GlobalStyle } from './styles/globalStyle'
+
+
 
 function App() {
 
   return (
-   <AuthProvider>
-    <Login/>
+    <AuthProvider>
+    <GlobalStyle/>
+    <Routers/>
    </AuthProvider>
   )
 }

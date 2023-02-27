@@ -4,15 +4,6 @@ import { user, finduserId } from "../repositories/IuserRepository";
 import { RoleRepossitory } from "../repositories/RoleRepository";
 import { UserRepository } from "../repositories/UserRepository";
 
-type userRoles = {
-  userId: string;
-  roleId: string;
-};
-
-type userRolesArray = {
-  roles: userRoles[];
-};
-
 async function decoder(request: Request): Promise<any | undefined> {
   const authHeader = request.headers.authorization || "";
   const userRepository = new UserRepository();
@@ -20,8 +11,6 @@ async function decoder(request: Request): Promise<any | undefined> {
   const [, token] = authHeader?.split(" ");
 
   const payload = decode(token);
-
-  console.log("meu token" + payload);
 
   const user = await userRepository.findById(String(payload?.sub));
 
@@ -38,13 +27,13 @@ export function is(role: String[]) {
 
     const roleRepository = new RoleRepossitory();
 
-    const founRoles = await roleRepository.findAll(
+    const foundRoles = await roleRepository.findAllById(
       user.UserRoles.map((res) => {
         return res.roleId;
       })
     );
 
-    const userRoles = founRoles.map((roles) => roles.name);
+    const userRoles = foundRoles.map((roles) => roles.name);
 
     console.log(userRoles);
 

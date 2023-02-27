@@ -20,6 +20,8 @@ router.post("/sessions", userSession.create);
 router.post("/permission", permissions.create);
 router.post("/roles", role.create);
 router.get("/users", userController.findUser);
+router.get("/users/roles", role.findAllRoles)
+
 
 router.post("/products",is(['ROLE_ADMIN']), product.create)
 router.get("/products", is(['ROLE_ADMIN', 'ROLE_USER' ]), product.index)

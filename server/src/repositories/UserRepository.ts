@@ -33,10 +33,17 @@ class UserRepository implements Iusers {
     return user;
   }
 
-  async findOne(username: string): Promise<user | null> {
+  async findOne(username: string): Promise<any | null> {
     const findUserExisted = await prisma.user.findFirst({
       where: {
         username,
+      },
+      include: {
+        UserRoles: {
+          select: {
+            roleId: true,
+          },
+        },
       },
     });
 

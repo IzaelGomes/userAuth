@@ -2,18 +2,39 @@ import { compare } from "bcryptjs";
 import { Request, Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { sign } from "jsonwebtoken";
+import { RoleRepossitory } from "../repositories/RoleRepository";
 
 class SessionContoller {
   async create(request: Request, response: Response) {
     const { username, password } = request.body;
 
     const userRepository = new UserRepository();
+    const roleRepository = new RoleRepossitory()
 
     const userExisted = await userRepository.findOne(username);
 
     if (!userExisted) {
       return response.status(400).json({ error: "User not found !" });
     }
+
+    
+
+    const foundRoles = await roleRepository.findAllById(
+      userExisted.UserRoles.map((res) => {
+        return res.roleId;
+      })
+    );
+
+    const userRoles = foundRoles.map((roles) => roles.name);
+
+    const user = {
+      id:userExisted.id,
+      name:userExisted.name, 
+      username:userExisted.username, 
+      roles: userRoles
+    }
+
+    console.log(user)
 
     const matchPassword = await compare(password, userExisted.password);
 
@@ -30,7 +51,7 @@ class SessionContoller {
 
     return response.json({
       token,
-      userExisted,
+      user,
     });
   }
 }

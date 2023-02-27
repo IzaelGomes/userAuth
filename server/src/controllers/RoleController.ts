@@ -28,6 +28,27 @@ class RoleController {
       });
     }
   }
+
+  async findAllRoles(resquest:Request, response:Response){
+
+    try{
+      const role = new RoleRepossitory()
+
+      const allRoles = await role.findAllRoles()
+  
+      console.log(allRoles)
+  
+      return response.json(allRoles)
+    }catch(err){
+      return response.status(401).json({
+        message:err
+      })
+    }
+
+   
+
+
+  }
 }
 
 export { RoleController };

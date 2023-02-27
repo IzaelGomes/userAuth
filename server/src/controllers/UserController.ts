@@ -7,7 +7,7 @@ class UserController {
     try {
       const userRepository = new UserRepository();
 
-      const { name, username, password } = request.body;
+      const {username } = request.body;
 
 
       const existUser = await userRepository.findOne(username);

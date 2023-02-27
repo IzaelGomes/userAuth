@@ -3,7 +3,7 @@ export type user = {
   username: string;
   password: string;
   id: string;
-  roles: string[];
+  roles?: string[];
 };
 
 export type finduserId = {
@@ -16,8 +16,8 @@ export type finduserId = {
 
 
 export type userRoles = {
-  userId: string;
-  roleId:string
+  userId?: string;
+  roleId?:string
 }
 
 export interface Iusers {
