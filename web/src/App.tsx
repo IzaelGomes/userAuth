@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import { AuthProvider } from './context/AuthContext'
-import Routers from './routes'
-import { GlobalStyle } from './styles/globalStyle'
-
-
+import { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
+import Routers from "./routes";
+import { GlobalStyle } from "./styles/globalStyle";
 
 function App() {
-
   return (
-    <AuthProvider>
-    <GlobalStyle/>
-    <Routers/>
-   </AuthProvider>
-  )
+    <>
+      <GlobalStyle />
+      <Routers />
+    </>
+  );
 }
 
-export default App
+export default App;

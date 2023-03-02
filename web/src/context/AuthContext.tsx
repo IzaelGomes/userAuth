@@ -6,12 +6,13 @@ interface IAuthContextState {
   signIn({ username, password }: IUserData): Promise<void>;
   userLogged(): boolean;
   user: IUserData | undefined;
+  isLoading: boolean;
 }
 
 interface IUserData {
   username: string;
   password: string;
-  roles?: String[];
+  roles?: string[];
 }
 
 interface TokenState {
@@ -22,6 +23,7 @@ const AuthContext = createContext<IAuthContextState>({} as IAuthContextState);
 
 const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<IUserData | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [token, setToken] = useState<TokenState>(() => {
     const token = localStorage.getItem("@PermissionYT:token");
@@ -36,24 +38,38 @@ const AuthProvider = ({ children }: any) => {
   });
 
   const signIn = useCallback(async ({ username, password }: IUserData) => {
-    const response = await api.post("/sessions", {
-      username,
-      password,
-    });
+    try {
+      setIsLoading(true);
 
-    const { token } = response.data;
+      console.log("Aqui 1");
 
-    setUser(response.data.user);
-    setToken(token);
+      const response = await api.post("/sessions", {
+        username,
+        password,
+      });
 
-    localStorage.setItem("@PermissionYT:token", token);
-   // api.defaults.headers.authorization = `Bearer ${token}`;
+      console.log("Aqui 2");
 
-    console.log(response.data);
+      const { token } = response.data;
+
+      setUser(response.data.user);
+      setToken(token);
+
+      localStorage.setItem("@PermissionYT:token", token);
+       api.defaults.headers.authorization = `Bearer ${token}`;
+
+      console.log({ user: response.data });
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const userLogged = useCallback(() => {
+    console.log("Aqui 1");
     const token = localStorage.getItem("@PermissionYT:token");
+    console.log(token);
     if (token) {
       return true;
     }
@@ -62,7 +78,9 @@ const AuthProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, signIn, userLogged, user }}>
+    <AuthContext.Provider
+      value={{ token, signIn, userLogged, user, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

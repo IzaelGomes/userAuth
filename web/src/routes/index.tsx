@@ -14,8 +14,7 @@ const Routers = () => {
           path="/dashboard"
           element={
             <PrivateRoutes role="ROLE_ADMIN, ROLE_USER">
-              {" "}
-              <Dashboard />{" "}
+              <Dashboard />
             </PrivateRoutes>
           }
         />
@@ -24,8 +23,7 @@ const Routers = () => {
           path="/product"
           element={
             <PrivateRoutes role="ROLE_ADMIN">
-              {" "}
-              <Product />{" "}
+              <Product />
             </PrivateRoutes>
           }
         />

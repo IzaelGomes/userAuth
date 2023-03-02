@@ -11,7 +11,7 @@ const Login = () => {
 
   const { signIn } = userAuth();
 
-  const handleSubmit = useCallback(
+  const handleSubmit = useCallback( 
     async (event: React.FormEvent) => {
       event.preventDefault();
       await signIn({ username, password });
@@ -31,34 +31,34 @@ const Login = () => {
 
       <FormContainer>
         <div className="form-box">
+          <h1> Login </h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor=""> Usuário: </label>
+              <br />
+              <input
+                className="input-form"
+                type="text"
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Insira seu usuário"
+              />
+            </div>
 
-       <h1> Login </h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor=""> Usuário: </label><br/>
-            <input
-              className="input-form"
-              type="text"
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder='Insira seu usuário'
-            />
-          </div>
+            <div>
+              <label htmlFor=""> Senha: </label>
+              <br />
+              <input
+                type="password"
+                className="input-form"
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Digite sua senha"
+              />
+            </div>
 
-          <div>
-            <label htmlFor=""> Senha: </label><br/>
-            <input
-              type="password"
-              className="input-form"
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder='Digite sua senha'
-            />
-          </div>
-
-          <div>
-            <button type="submit"> entrar </button>
-          </div>
-          
-        </form>
+            <div>
+              <button type="submit"> entrar </button>
+            </div>
+          </form>
         </div>
       </FormContainer>
     </Wrapper>

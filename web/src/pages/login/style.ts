@@ -45,10 +45,10 @@ export const FormContainer = styled.div`
       width: 15rem;
       margin-bottom: 13px;
       border: 1px solid;
-      background: #DFE0E8;
+      background: #dfe0e8;
       border: none;
       padding: 6px;
-      outline:none;
+      outline: none;
     }
 
     form {
