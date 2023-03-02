@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { sign } from "jsonwebtoken";
 import { RoleRepossitory } from "../repositories/RoleRepository";
+import * as dotenv from 'dotenv'
+dotenv.config({path:"../../.env"})
 
 class SessionContoller {
   async create(request: Request, response: Response) {
@@ -44,7 +46,7 @@ class SessionContoller {
         .json({ error: "User or Password incorrect  !" });
     }
 
-    const token = sign({}, "93eea6a2c12628b3a3b7618f6882c912", {
+    const token = sign({}, "93eea6a2c12628b3a3b7618f6882c912" , {
       subject: userExisted.id,
       expiresIn: "1d",
     });

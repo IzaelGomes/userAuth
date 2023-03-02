@@ -7,11 +7,9 @@ class UserController {
     try {
       const userRepository = new UserRepository();
 
-      const {username } = request.body;
-
+      const { username } = request.body;
 
       const existUser = await userRepository.findOne(username);
-
 
       if (existUser?.username) {
         return response.status(400).json({ message: "User already exists" });
@@ -30,7 +28,6 @@ class UserController {
   async findUser(request: Request, response: Response) {
     try {
       const data = request.body;
-      
 
       const userRepository = new UserRepository();
 

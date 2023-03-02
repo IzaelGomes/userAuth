@@ -1,22 +1,29 @@
-import { Role } from "@prisma/client";
-import { permissions } from "./IpermissionRepository";
+
+
 
 export type role = {
   id: string;
   name: string;
   description: string;
   created_at: Date;
-  permission: string[];
+  
 };
 
-/*export type findIdRole = {
-  Roles?: role[]
-};*/
+export type Createrole = {
+  id: string;
+  name: string;
+  description: string;
+  created_at: Date;
+  permission:string[];
+  
+};
+
+
 
 
 export interface IRole {
-  save(data: role): Promise<role>;
+  save(data: role): Promise<Createrole>;
   findOne(name: string): Promise<role | null>;
   findAllById(id:any): Promise<role | undefined>
-  findAllRoles(): Promise<role | undefined>
+  findAllRoles(): Promise<role[] | undefined>
 }

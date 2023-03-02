@@ -1,10 +1,10 @@
 import { Ipermission, permissions } from "./IpermissionRepository";
 import { prisma } from "../database/prisma";
 
-import { IRole, role } from "./IRolesRepository";
+import { Createrole, IRole, role } from "./IRolesRepository";
 
 class RoleRepossitory implements IRole {
-  async save({ name, description, permission }: role): Promise<role> {
+  async save({ name, description, permission }: Createrole): Promise<Createrole> {
     const createRole = await prisma.role.create({
       data: {
         name,
@@ -30,8 +30,12 @@ class RoleRepossitory implements IRole {
     return savedRole;
   }
 
-  async findAllRoles(): Promise<role | undefined> {
-    const roles = await prisma.role.findMany();
+  async findAllRoles(): Promise<role[] | undefined> {
+    const roles = await prisma.role.findMany({
+      include:{
+        permissions:true
+      }
+    });
 
     return roles;
   }

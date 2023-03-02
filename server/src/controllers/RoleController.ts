@@ -29,25 +29,20 @@ class RoleController {
     }
   }
 
-  async findAllRoles(resquest:Request, response:Response){
+  async findAllRoles(resquest: Request, response: Response) {
+    try {
+      const role = new RoleRepossitory();
 
-    try{
-      const role = new RoleRepossitory()
+      const allRoles = await role.findAllRoles();
 
-      const allRoles = await role.findAllRoles()
-  
-      console.log(allRoles)
-  
-      return response.json(allRoles)
-    }catch(err){
+      console.log(allRoles);
+
+      return response.json(allRoles);
+    } catch (err) {
       return response.status(401).json({
-        message:err
-      })
+        message: err,
+      });
     }
-
-   
-
-
   }
 }
 

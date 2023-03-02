@@ -13,9 +13,9 @@ class UserRepository implements Iusers {
         password: passwordHashed,
         UserRoles: {
           createMany: {
-            data: roles.map((res) => {
+            data: roles?.map((res) => {
               return { roleId: res };
-            }),
+            }) ?? [],
           },
         },
       },

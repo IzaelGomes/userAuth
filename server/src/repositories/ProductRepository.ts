@@ -16,7 +16,7 @@ class ProductRepository implements IProducts {
     throw new Error("Method not implemented.");
   }
 
-  async find(): Promise<product | null> {
+  async find(): Promise<product[] | null> {
     const products = await prisma.products.findMany();
 
     return products;
